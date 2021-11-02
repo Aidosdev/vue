@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-      <MyComponent />
+      <UserCard />
   </div>
 </template>
 
-<script>  
-  import MyComponent from './components/MyComponent.vue'
+<script>   
+  import UserCard from './components/UserCard.vue'
   export default {
     name: 'App',
-    components: {
-      MyComponent
+    components: { 
+      UserCard
     }
   }
 </script>
