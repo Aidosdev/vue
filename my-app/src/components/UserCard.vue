@@ -2,21 +2,40 @@
     <div class="user-card">
         <h1>Научу зарабатывать от 100 000тг. в час</h1>
         <div class="main-information">
-            <img src="https://sun9-58.userapi.com/s/v1/ig2/q18vcIBmPNpmu7SVFma-jq8YDmVPkR-qKIh0Z-x82BrIzJP4ZCBcg6zOnsKWbNFUnDhdy_8KsKpUxiqdPPTITgnZ.jpg?size=200x200&quality=96&crop=4,233,1608,1609&ava=1" width="500px">
+            <img src="https://pbs.twimg.com/profile_images/937142070992605184/GO70zooO_400x400.jpg" width="500px">
             <div class="info">
                 <h2>
-                    {{firstName.toUpperCase() + ' ' + lastName.toUpperCase()}}
+                    {{getAuthorFullName}}
                 </h2>
                 <strong class="coach">Бизнес коуч</strong>
                 <ul>
-                    <li>Учу людей делать РЕАЛЬНЫЕ бабки, на себя просто не хватило времени Х(</li>
-                    <li>Не знаю, что такое "Успешный Успех", но знаю, что нужно ТЕБЕ!</li>
-                    <li>Пообещал, что накачаюсь, когда кого-нибудь обману</li>
+                    <li>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio, eveniet!</li>
+                    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit.</li>
+                    <li>Lorem ipsum dolor sit amet consectetur.</li>
                 </ul>
             </div>
         </div>
-        <p>Участников: <strong>10</strong></p>
-        <ul></ul>
+        <p>Участников: <strong>{{users.length}}</strong></p>
+        <ul>
+            <li v-for="(user, index) in users" :key="index">
+                 {{index + 1}} - {{getFullName(user)}} 
+            </li>
+        </ul>
+        <button 
+            type="button" 
+            @click="prevPage()">Пред.
+        </button>
+        <button 
+            v-for="page in pages" 
+            :key="page"
+            @click="currentPage = page">
+            {{page}}
+        </button>
+        <button 
+            type="button" 
+            @click="nextPage()">След.
+        </button>     
+        <p>Страница {{currentPage}} из {{pages}}</p>
     </div>
 </template>
 
@@ -25,8 +44,60 @@
         name: "UserCard",
         data() {
             return {
-                firstName: 'Айдос',
-                lastName: 'Кожанов',
+                firstName: 'Steve',
+                lastName: 'Rogers',
+                users: [
+                    {
+                        firstName: 'Tony',
+                        lastName: 'Stark',
+                    },
+                    {
+                        firstName: 'Thor',
+                        lastName: 'Odinson',
+                    },
+                    {
+                        firstName: 'Bruce',
+                        lastName: 'Banner',
+                    },
+                    {
+                        firstName: 'Natasha',
+                        lastName: 'Romanov',
+                    },
+                    {
+                        firstName: 'Klint',
+                        lastName: 'Barton',
+                    }
+                ],
+                pages: 3,
+                currentPage: 1
+            }
+        },
+        computed: {
+            getAuthorFullName() {
+                return `${this.firstName} ${this.lastName}`.toUpperCase()
+            }
+        },
+        methods: {
+            getFullName(user) {
+                return `${user.firstName} ${user.lastName}`
+            },
+            nextPage() {
+                if (this.currentPage < this.pages) {
+                    this.currentPage++
+                }    
+            },
+            prevPage() {
+                if (this.currentPage > 1) {
+                    this.currentPage--
+                }    
+            },
+            loadUsers(page) {
+                console.log(`Загрузка пользователей: страница ${page}`)
+            }
+        },
+        watch: {
+            currentPage(page) {
+                this.loadUsers(page)
             }
         }
     }
@@ -47,6 +118,9 @@
         padding: 20px;
         p {
             margin-top: 10px;
+        }
+        ul {
+            list-style: none;
         }
     }
 
